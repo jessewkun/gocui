@@ -653,6 +653,16 @@ func (v *View) Line(y int) (string, error) {
 	return lineType(v.lines[y]).String(), nil
 }
 
+// DeleteLine deletes the specified line
+func (v *View) DeleteLine(y int) error {
+	if y < 0 || y >= len(v.lines) {
+		return ErrInvalidPoint
+	}
+
+	v.lines = append(v.lines[:y], v.lines[y+1:]...)
+	return nil
+}
+
 // Word returns a string with the word of the view's internal buffer
 // at the position corresponding to the point (x, y).
 func (v *View) Word(x, y int) (string, error) {
